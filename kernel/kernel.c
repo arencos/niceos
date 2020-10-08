@@ -4,8 +4,11 @@
 #include "../libc/string.h"
 #include "../libc/mem.h"
 #include <stdint.h>
-
-
+#include "../localisation/en-us.h"
+#include "../localisation/tr-tr.h"
+// If you create files for languages, dont forget to include them!
+// There is not much translations as the English and Turkish one is for demonstration reasons.
+;   // Idk why this is needed but it will error if you delete this
 void kernel_main() {
     isr_install();
     irq_install();
@@ -14,9 +17,9 @@ void kernel_main() {
     asm("int $3");
 
     clear_screen();
-
-    kprint("Welcome to NiceOS!\n");
-    kprint("Type HELP for a list of commands.\n> ");
+    // Check /localisation/language-country.h for more info.
+    kprint(welcome_en);
+    kprint(typehelplist_en);
 }
 
 void user_input(char *input) {
@@ -43,17 +46,14 @@ void user_input(char *input) {
         kprint("");
     }
     else if(strcmp(input, "HELP") == 0){
-        kprint("All commands in this OS as of this version!\n");
-        kprint("/*-----------------------------------------*/\n");
-        kprint("CLS          : Clears the screen!\n");
-        kprint("PAGE         : Shows Page info. For debugging purpose only!\n");
-        kprint("HALT         : Halts the CPU!\n");
-        kprint("ABOUT        : Shows information about the OS\n");
+        // Check /localisation/language-country.h for more info.
+        kprint(helpmessage_en);
     }
     else if(strcmp(input, "ABOUT") == 0){
         kprint("NiceOS Alpha!\n");
         kprint("Version 2.09\n");
         kprint("(C) NiceOS Team!\n");
+	kprint("Contribute on GitHub!\n");
     }
     else if(strcmp(input, "CLEAR") == 0)
     { 
@@ -66,6 +66,11 @@ void user_input(char *input) {
     else if(strcmp(input, "SHELL") == 0)
     { 
         kprint("I see you are excited for a shell, but it is on its way!\n");
+    }
+    else if(strcmp(input, "TEST") == 0)
+    {
+	    // I dont know why vim has these weird tabs but yea
+	    kprint("TEST\n");
     }
     else
     {
